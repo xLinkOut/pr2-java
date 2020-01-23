@@ -1,0 +1,131 @@
+\documentclass[10pt, italian, openany]{book}
+
+% Set page margins
+\usepackage[top=100pt,bottom=100pt,left=68pt,right=66pt]{geometry}
+
+\usepackage[]{graphicx}
+% If multiple images are to be added, a folder (path) with all the images can be added here 
+\graphicspath{ {images/} }
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+ 
+% All page numbers positioned at the bottom of the page
+\usepackage{fancyhdr}
+\fancyhf{} % clear all header and footers
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt} % remove the header rule
+\pagestyle{fancy}
+
+% Changes the style of chapter headings
+\usepackage{titlesec}
+
+\titleformat{\chapter}
+   {\normalfont\LARGE\bfseries}{\thechapter.}{1em}{}
+
+% Change distance between chapter header and text
+\titlespacing{\chapter}{0pt}{50pt}{2\baselineskip}
+\usepackage{titlesec}
+\titleformat{\section}
+  [hang] % <shape>
+  {\normalfont\bfseries\Large} % <format>
+  {} % <label>
+  {0pt} % <sep>
+  {} % <before code>
+\renewcommand{\thesection}{} % Remove section references...
+\renewcommand{\thesubsection}{\arabic{subsection}} %... from subsections
+
+% Numbered subsections
+\setcounter{secnumdepth}{3}
+
+% Prevents LaTeX from filling out a page to the bottom
+\raggedbottom
+
+\usepackage{listings}
+\usepackage{color}
+% Code Listings
+\definecolor{vgreen}{RGB}{104,180,104}
+\definecolor{vblue}{RGB}{49,49,255}
+\definecolor{vorange}{RGB}{255,143,102}
+\definecolor{vlightgrey}{RGB}{245,245,245}
+\lstdefinestyle{bash} {
+	language=bash,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{vblue},
+	identifierstyle=\color{black},
+	commentstyle=\color{vgreen},
+	tabsize=4,
+	backgroundcolor = \color{vlightgrey},
+	literate=*{:}{:}1
+}
+
+\begin{document}
+
+\begin{titlepage}
+	\clearpage\thispagestyle{empty}
+	\centering
+	\vspace{1cm}
+
+    \includegraphics[scale=0.60]{unipi-logo.png}
+    
+	{\normalsize \noindent Dipartimento di Informatica \\
+	             Corso di Laurea in Informatica \par}
+	
+	\vspace{2cm}
+	{\Huge \textbf{Relazione progetto Java} \par}
+	\vspace{1cm}
+	{\large Programmazione II}
+	\vspace{5cm}
+
+    \begin{minipage}[t]{0.47\textwidth}
+    	{\large{ Prof. Gianluigi Ferrari\\ Prof.ssa Francesca Levi}}
+    \end{minipage}\hfill\begin{minipage}[t]{0.47\textwidth}\raggedleft
+    	{\large {Mario Rossi \\ 123456 - Corso A\\ }}
+    \end{minipage}
+
+    \vspace{4cm}
+
+	{\normalsize Anno Accademico 2019/2020 \par}
+
+	\pagebreak
+
+\end{titlepage}
+
+\chapter*{Relazione}
+
+% A * after the section/chapter command indicates an unnumbered header which will not be added to the table of contents
+\section{Dettagli sul metodo di sviluppo}
+Il progetto è stato sviluppato con il supporto dell'IDE \textit{IntelliJ IDEA}, senza tuttavia l'utilizzo di strumenti esterni quali \textit{Maven} per la compilazione o \textit{JUnit} per la creazione dei tests, che invece sono stati scritti a mano. Di conseguenza, l'esecuzione è possibile utilizzando semplicemente i comandi messi a disposizione dal JDK. Ad esempio:
+
+\begin{lstlisting}[style=bash]
+cd PR2-Java/src/app
+javac *.java exception/*.java
+cd ..
+java app.Main
+\end{lstlisting}
+
+\section{Dettagli implementativi}
+Il progetto richiede  la progettazione, implemetazione e documentazione di una collezione di dati \textbf{DataBoard}, che si comporta come una bacheca messa a disposizione dell'utente, nella quale potrà pubblicare dei posts, astratti come oggetti generici che estendono il tipo di dato \textbf{Data}. I posts devono includere un metodo display per visualizzarne il contenuto, e la board deve garantire l'integrità fornendo un metodo di autenticazione così da restringere le operazioni di modifica al solo proprietario. Quest'ultimo può creare una lista di categorie personalizzate ed associare ad ognuna di esse uno o più amici, i quali potranno visualizzare i posts appartenenti alla stessa, nonché, volendo, mettere un like. Sono richieste \textbf{due implementazioni differenti} che riescano a funzionare sotto le medesime condizioni di test, senza dover apportare nessuna modifica. Viene fornita l'interfaccia di DataBoard. Inoltre tutti i file sono stati commentati seguendo le linee guida di Javadoc, ed ogni classe è corredata da una breve overview e dalle sue AF e RI.
+
+\subsection{Data}
+Il tipo di dato \textbf{Data} rappresenta in maniera astratta l'oggetto generico (che chiameremo \textit{post} da qui in poi) che l'utente andrà a creare ed a condividere sulla propria board. Ogni post ha alcuni campi che lo identificano, quali \textit{author} che coincide sempre con il nome del proprietario della bacheca, \textit{content} che invece rappresenta il contenuto del post e \textit{category}, che invece è la categoria a cui il post appartiene. Un campo \textit{timestamp} viene riempito automaticamente con l'istante di tempo in cui il post viene creato, utilizzando un formato UNIX-like per evitare di usare moduli esterni per la gestione delle date. Infine, una lista \textit{likes} mantiene i nomi degli amici che hanno messo un like al post. Non si è scelto di mantenere anche un contatore del numero di likes in quanto è facilmente estrapolabile dalla lista utilizzando il suo metodo \textit{.size}, che \href{https://docs.oracle.com/javase/6/docs/api/java/util/ArrayList.html}{opera in tempo costante}. La classe implementa inoltre la funzione \textit{.display} per visualizzare il post, mentre l'operazione di aggiunta di un like funziona come un "toggle", ovvero se il like è già presente la funzione \textit{.addLike} lo rimuove. Il metodo \textit{.toString} ritorna le informazioni principali del post in un formato JSON-like, in modo da facilitarne lo scambio in un'ipotetica comunicazione client-server.
+
+\subsection{Board}
+Dovendo progettare due implementazioni differenti della stessa classe \textbf{Board}, si è deciso di scriverne la struttura a parte, da estendere poi con le singole implementazioni. Questa presenta un campo \textit{owner}, che contiene il nome del proprietario della board, ed un campo \textit{password}. La board mette a disposizione un metodo \textit{.authentication} per verificare l'identità del proprietario prima di effettuare una qualsiasi operazione ad accesso ristretto, nonché un metodo \textit{.resetPassword} che permette all'utente di cambiare la propria password.
+
+\subsubsection{Prima implementazione di Board}
+In \textbf{Board1} si è scelto di utilizzare tre strutture dati diverse per immagazzinare le informazioni necessarie al funzionamento.
+Ogni board presenta dunque una lista \textit{feed}, che contiene tutti i post creati e condivisi dal suo proprietario, in ordine di pubblicazione; essendo una lista, ammette la presenza di duplicati, ritenendo legittima la possibilità di pubblicare più volte uno stesso contenuto. Un Set di amici denomitato \textit{friends} invece permette di tenere in memoria gli amici aggiunti dal proprietario e di poterci accedere senza passare dalle categorie. Questo, essendo un insieme, non ammette la presenza di duplicati. Infine, è stata usata un Map denominata \textit{categories} per associare ad ogni categoria un sottoinsieme di amici che possono visualizzare i contenuti appartenenti ad essa. Anche qui, non sono ammesse categorie duplicate. La creazione di una categoria aggiunge un elemento alla map associando ad esso un ulteriore Set che conterrà i nomi degli amici che hanno il permesso di accedere ai post della suddetta categoria.
+
+\subsubsection{Seconda implementazione di Board}
+In \textbf{Board2} si è scelto invece di appoggiarsi ad una struttura esterna, implementando una classe che rappresenta una singola categoria. La board salva le categorie create dall'utente in una Map, associando il loro nome ad un nuovo oggetto di tipo \textbf{Category}. Quest'ultimo ha al suo interno due strutture dati: un \textit{Set di amici}, che saranno esclusivamente quelli che possono accedere ai post della categoria in questione, ed una \textit{lista di posts} che, a differenza della prima implementazione, non contiene tutti quelli pubblicati ma solo quelli appartenenti alla singola categoria. La classe offre alcuni getter per accedere a queste strutture, nonché metodi di appoggio che permettono di controllare, ad esempio, se ad un certo amico è permesso visualizzare i post di quella categoria.
+
+\section{Test}
+Il \textbf{file di test} è stato scritto a mano, senza l'utilizzo di framework esterni. Utilizza una stessa funzione per operare sulle due diverse implementazioni, in modo da assicurare che le stesse funzioni operino facilmente su entrambe. Per ogni funzione, sono stati controllati anche i relativi \textbf{edge cases}, utilizzando scenari limite per lanciare le varie eccezioni. L'esito del test viene stampato a video, dove accanto ad ogni metodo e ad ogni relativa eccezione sarà visualizzata un'emoji di conferma verde se il test è stato superato, altrimenti un'emoji ad X rossa se il test è fallito. Nei pochi casi in cui l'errore può essere generato da un test scritto male, viene lanciata una \textit{TestFailException} che termina il test ed invita a controllare che sia stato scritto correttamente.
+
+\end{document}
