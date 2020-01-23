@@ -2,7 +2,8 @@
 *.iml
 *.class
 .DS_Store
-relazione/relazione.pdf
+relazione/Relazione.pdf
+relazione/Specifica.pdf
 
 # Directories
 out/
