@@ -56,5 +56,4 @@ public interface DataBoard<E extends Data> {
     public Iterator<E> getFriendIterator(String friend)
             throws EmptyFieldException;
 
-    // Altre operazioni qui...
 }

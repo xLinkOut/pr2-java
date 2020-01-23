@@ -33,16 +33,17 @@ public abstract class Board<E extends Data>
     private final String owner;
     private String password;
 
-    /** 
-     *  Costruttore di Board
-     *  @param  owner    username valido, diverso dalla stringa vuota
-     *  @param  password password valida, diverso dalla stringa vuota   
-     *  @throws EmptyFieldException se username o password sono vuoti
+    /**
+     * Costruttore di Board
+     *
+     * @param owner    username valido, diverso dalla stringa vuota
+     * @param password password valida, diverso dalla stringa vuota
+     * @throws EmptyFieldException se username o password sono vuoti
      */
     public Board(String owner, String password)
-            throws EmptyFieldException{
+            throws EmptyFieldException {
 
-        if(owner.isBlank() || password.isBlank())
+        if (owner.isBlank() || password.isBlank())
             throw new EmptyFieldException();
 
         this.owner = owner;
@@ -51,43 +52,48 @@ public abstract class Board<E extends Data>
 
     /**
      * Getter dell'username
+     *
      * @return (owner) l'username del proprietario della board
      */
-    public String getOwner() { return owner; }
+    public String getOwner() {
+        return owner;
+    }
 
     /**
      * Verifica di autenticazione
-     * @param  password password corrente dell'utente
-     * @throws EmptyFieldException se password è una stringa vuota
-     * @throws UnauthorizedException se la password è diversa da quella impostata
+     *
+     * @param password password corrente dell'utente
      * @return (true) se l'autenticazione è riuscita, ovvero la password è corretta
+     * @throws EmptyFieldException   se password è una stringa vuota
+     * @throws UnauthorizedException se la password è diversa da quella impostata
      */
     public boolean authentication(String password)
             throws EmptyFieldException, UnauthorizedException {
 
-        if(password.isBlank())
+        if (password.isBlank())
             throw new EmptyFieldException();
-        if(!(password.equals(this.password)))
+        if (!(password.equals(this.password)))
             throw new UnauthorizedException();
         return true;
     }
 
     /**
      * Resetta la password dell'utente
-     * @param  currentPassword è la password corrente dell'utente
-     * @param  newPassword è la nuova password che si vuole impostare
-     * @throws EmptyFieldException se almeno uno dei due parametri è vuoto
+     *
+     * @param currentPassword è la password corrente dell'utente
+     * @param newPassword     è la nuova password che si vuole impostare
+     * @throws EmptyFieldException   se almeno uno dei due parametri è vuoto
      * @throws SamePasswordException se newPassword è uguale a currentPassowrd
      * @throws UnauthorizedException se la password corrente non è giusta
      * @modifies this.password
      * @effects post(this.password) = newPassword
-     */ 
+     */
     public void resetPassword(String currentPassword, String newPassword)
             throws EmptyFieldException, SamePasswordException, UnauthorizedException {
 
-        if(currentPassword.isBlank() || newPassword.isBlank())
+        if (currentPassword.isBlank() || newPassword.isBlank())
             throw new EmptyFieldException();
-        if(currentPassword.equals(newPassword))
+        if (currentPassword.equals(newPassword))
             throw new SamePasswordException();
 
         this.authentication(currentPassword);

@@ -44,13 +44,14 @@ public class Board1<E extends Data>
 
     /**
      * Costruttore di board (1)
+     *
      * @param username valido, diverso dalla stringa vuota
      * @param password valida, diverso dalla stringa vuota
      * @throws EmptyFieldException se almeno uno dei parametri è vuoto
      */
     public Board1(String username, String password)
             throws EmptyFieldException {
-        super(username,password);
+        super(username, password);
         this.feed = new ArrayList<>();
         this.friends = new HashSet<>();
         this.categories = new HashMap<>();
@@ -58,10 +59,11 @@ public class Board1<E extends Data>
 
     /**
      * Crea una nuova categoria
-     * @param category  nome della categoria da creare
+     *
+     * @param category nome della categoria da creare
      * @param password password dell'utente per autenticarsi
-     * @throws EmptyFieldException se almeno uno dei due parametri è una stringa vuota
-     * @throws UnauthorizedException se la password non è corretta
+     * @throws EmptyFieldException    se almeno uno dei due parametri è una stringa vuota
+     * @throws UnauthorizedException  se la password non è corretta
      * @throws DuplicateItemException se esiste già una categoria con lo stesso nome
      * @modifies this.categories
      * @effects post(this.categories) = pre(this.categories) U {category}
@@ -70,10 +72,10 @@ public class Board1<E extends Data>
     public void createCategory(String category, String password)
             throws EmptyFieldException, UnauthorizedException, DuplicateItemException {
 
-        if(password.isBlank() || category.isBlank())
+        if (password.isBlank() || category.isBlank())
             throw new EmptyFieldException();
         this.authentication(password);
-        if(this.categories.containsKey(category))
+        if (this.categories.containsKey(category))
             throw new DuplicateItemException();
         else
             this.categories.put(category, new TreeSet<>());
@@ -81,9 +83,10 @@ public class Board1<E extends Data>
 
     /**
      * Rimuove una categoria esistente
-     * @param category  nome della categoria da rimuovere
+     *
+     * @param category nome della categoria da rimuovere
      * @param password password dell'utente per autenticarsi
-     * @throws EmptyFieldException se uno dei due parametri è una stringa vuota
+     * @throws EmptyFieldException   se uno dei due parametri è una stringa vuota
      * @throws UnauthorizedException se la password non è corretta
      * @throws ItemNotFoundException se la categoria da rimuovere non esiste
      * @modifies this.categories
@@ -93,10 +96,10 @@ public class Board1<E extends Data>
     public void removeCategory(String category, String password)
             throws EmptyFieldException, UnauthorizedException, ItemNotFoundException {
 
-        if(password.isEmpty() || category.isEmpty())
+        if (password.isEmpty() || category.isEmpty())
             throw new EmptyFieldException();
         this.authentication(password);
-        if(this.categories.containsKey(category))
+        if (this.categories.containsKey(category))
             this.categories.remove(category);
         else
             throw new ItemNotFoundException();
@@ -104,10 +107,11 @@ public class Board1<E extends Data>
 
     /**
      * Associa un nuovo amico ad una categoria esistente
-     * @param category  nome della categoria dove aggiungere l'amico
+     *
+     * @param category nome della categoria dove aggiungere l'amico
      * @param password password dell'utente per autenticarsi
-     * @param friend nome dell'amico da aggiungere
-     * @throws EmptyFieldException se almeno uno dei tre parametri è una stringa vuota
+     * @param friend   nome dell'amico da aggiungere
+     * @throws EmptyFieldException   se almeno uno dei tre parametri è una stringa vuota
      * @throws UnauthorizedException se la password non è corretta
      * @throws ItemNotFoundException se non esiste una categoria con quel nome
      * @modifies this.categories, this.friends
@@ -118,22 +122,23 @@ public class Board1<E extends Data>
     public void addFriend(String category, String password, String friend)
             throws EmptyFieldException, UnauthorizedException, ItemNotFoundException {
 
-        if(password.isEmpty() || friend.isEmpty() || category.isEmpty())
+        if (password.isEmpty() || friend.isEmpty() || category.isEmpty())
             throw new EmptyFieldException();
         this.authentication(password);
-        if(this.categories.containsKey(category)){
+        if (this.categories.containsKey(category)) {
             this.categories.get(category).add(friend);
             this.friends.add(friend);
-        }else
+        } else
             throw new ItemNotFoundException();
     }
 
     /**
      * Rimuove l'associazione tra un certo amico ed una specifica categoria
-     * @param category  nome della categoria da dove rimuovere l'amico
+     *
+     * @param category nome della categoria da dove rimuovere l'amico
      * @param password password dell'utente per autenticarsi
-     * @param friend nome dell'amico da rimuovere
-     * @throws EmptyFieldException se almeno uno dei tre parametri è una stringa vuota
+     * @param friend   nome dell'amico da rimuovere
+     * @throws EmptyFieldException   se almeno uno dei tre parametri è una stringa vuota
      * @throws UnauthorizedException se la password non è corretta
      * @throws ItemNotFoundException se non esiste un amico con quel nome
      * @modifies this.categories, this.friends
@@ -144,36 +149,37 @@ public class Board1<E extends Data>
     public void removeFriend(String category, String password, String friend)
             throws EmptyFieldException, UnauthorizedException, ItemNotFoundException {
 
-        if(password.isBlank() || friend.isBlank() || category.isBlank())
+        if (password.isBlank() || friend.isBlank() || category.isBlank())
             throw new EmptyFieldException();
         this.authentication(password);
-        if(this.friends.contains(friend)){
+        if (this.friends.contains(friend)) {
             this.friends.remove(friend);
             this.categories.get(category).remove(friend);
-        }else
+        } else
             throw new ItemNotFoundException();
     }
 
     /**
      * Inserisce un nuovo post nel feed dell'utente
+     *
      * @param password password dell'utente per autenticarsi
-     * @param post il post da inserire nel feed
-     * @param category  nome della categoria dove inserire il post
-     * @throws EmptyFieldException se uno dei due parametri stringa è vuota
+     * @param post     il post da inserire nel feed
+     * @param category nome della categoria dove inserire il post
+     * @return (true) se l'operazione va a buon fine
+     * @throws EmptyFieldException   se uno dei due parametri stringa è vuota
      * @throws UnauthorizedException se la password non è corretta
      * @throws ItemNotFoundException se non esiste una categoria con quel nome
      * @modifies this.feed
      * @effects post(this.feed) = pre(this.feed) U {post}
-     * @return (true) se l'operazione va a buon fine
      */
     @Override
     public boolean put(String password, E post, String category)
             throws EmptyFieldException, UnauthorizedException, ItemNotFoundException {
 
-        if(password.isBlank() || category.isBlank())
+        if (password.isBlank() || category.isBlank())
             throw new EmptyFieldException();
         this.authentication(password);
-        if(this.categories.containsKey(category))
+        if (this.categories.containsKey(category))
             // Non controllo i duplicati, in quanto posso voler
             // pubblicare più di una volta uno stesso contenuto
             return this.feed.add(post);
@@ -183,21 +189,22 @@ public class Board1<E extends Data>
 
     /**
      * Visualizza un post dal feed dell'utente
+     *
      * @param password password dell'utente per autenticarsi
-     * @param post il post da visualizzare dal feed
-     * @throws EmptyFieldException se il campo password è vuoto
+     * @param post     il post da visualizzare dal feed
+     * @return (post) ritorna una copia del dato richiesto
+     * @throws EmptyFieldException   se il campo password è vuoto
      * @throws UnauthorizedException se la password non è corretta
      * @throws ItemNotFoundException se il post richiesto non esiste
-     * @return (post) ritorna una copia del dato richiesto
      */
     @Override
     public E get(String password, E post)
             throws UnauthorizedException, EmptyFieldException, ItemNotFoundException {
 
-        if(password.isBlank())
+        if (password.isBlank())
             throw new EmptyFieldException();
         this.authentication(password);
-        if(this.feed.contains(post))
+        if (this.feed.contains(post))
             return (E) this.feed.get(this.feed.indexOf(post)).clone();
         else
             throw new ItemNotFoundException();
@@ -205,23 +212,24 @@ public class Board1<E extends Data>
 
     /**
      * Rimuove un post dal feed dell'utente
+     *
      * @param password password dell'utente per autenticarsi
-     * @param post il post da rimuovere dal feed
-     * @throws EmptyFieldException se il campo password è vuoto
+     * @param post     il post da rimuovere dal feed
+     * @return (post) ritorna una copia del dato rimosso
+     * @throws EmptyFieldException   se il campo password è vuoto
      * @throws UnauthorizedException se la password non è corretta
      * @throws ItemNotFoundException se il post da rimuovere non esiste
      * @modifies this.feed
      * @effects post(this.feed) = pre(this.feed) \ {post}
-     * @return (post) ritorna una copia del dato rimosso
      */
     @Override
     public E remove(String password, E post)
             throws UnauthorizedException, EmptyFieldException, ItemNotFoundException {
 
-        if(password.isBlank())
+        if (password.isBlank())
             throw new EmptyFieldException();
         this.authentication(password);
-        if(this.feed.contains(post))
+        if (this.feed.contains(post))
             this.feed.remove(feed.indexOf(post));
         else
             throw new ItemNotFoundException();
@@ -231,9 +239,10 @@ public class Board1<E extends Data>
     /**
      * Inserisce un like ad un post specifico da parte di un amico,
      * se il like c'è già allora funziona da toggle, ovvero lo rimuove
+     *
      * @param friend nome dell'amico che vuole mettere like al post
-     * @param post post a cui mettere like
-     * @throws EmptyFieldException se il campo friend è vuoto
+     * @param post   post a cui mettere like
+     * @throws EmptyFieldException   se il campo friend è vuoto
      * @throws ItemNotFoundException se il post non esiste
      * @modifies this.feed[post]
      * @effects post(this.feed[post][likes]) = pre(this.feed[post][likes]) U {friend}
@@ -242,10 +251,10 @@ public class Board1<E extends Data>
     public void insertLike(String friend, E post)
             throws EmptyFieldException, ItemNotFoundException, NotAllowedException {
 
-        if(friend.isBlank())
-                throw new EmptyFieldException();
-        if(this.feed.contains(post) && this.categories.containsKey(post.getCategory()))
-            if(this.categories.get(post.getCategory()).contains(friend))
+        if (friend.isBlank())
+            throw new EmptyFieldException();
+        if (this.feed.contains(post) && this.categories.containsKey(post.getCategory()))
+            if (this.categories.get(post.getCategory()).contains(friend))
                 this.feed.get(this.feed.indexOf(post)).addLike(friend);
             else
                 throw new NotAllowedException();
@@ -255,42 +264,44 @@ public class Board1<E extends Data>
 
     /**
      * Crea la lista dei post in bacheca di una determinata categoria
+     *
      * @param password password dell'utente per autenticarsi
-     * @param category  nome della categoria di cui si vogliono vedere i post
-     * @throws EmptyFieldException se uno dei due campi è vuoto
+     * @param category nome della categoria di cui si vogliono vedere i post
+     * @return (list) ritorna una lista dei post appartenenti ad una categoria
+     * @throws EmptyFieldException   se uno dei due campi è vuoto
      * @throws UnauthorizedException se la password non è corretta
      * @throws ItemNotFoundException se la categoria non esiste
-     * @return (list) ritorna una lista dei post appartenenti ad una categoria
      */
     @Override
     public List<E> getDataCategory(String password, String category)
             throws UnauthorizedException, EmptyFieldException, ItemNotFoundException {
 
-        if(password.isBlank() || category.isBlank())
+        if (password.isBlank() || category.isBlank())
             throw new EmptyFieldException();
         this.authentication(password);
-        if(this.categories.containsKey(category)){
+        if (this.categories.containsKey(category)) {
             List<E> filteredFeed = new ArrayList<>();
-            for(E post : this.feed)
-               if (post.getCategory().equals(category))
+            for (E post : this.feed)
+                if (post.getCategory().equals(category))
                     filteredFeed.add(post);
             return filteredFeed;
-        }else
+        } else
             throw new ItemNotFoundException();
     }
 
     /**
      * Iteratore che genera tutti i dati del feed ordinati per numero di like
+     *
      * @param password password dell'utente per autenticarsi
-     * @throws EmptyFieldException se il campo password è vuoto
-     * @throws UnauthorizedException se la password non è corretta
      * @return (iterator) ritorna un iteratore immutabile (senza la remove) per generare i posts
+     * @throws EmptyFieldException   se il campo password è vuoto
+     * @throws UnauthorizedException se la password non è corretta
      */
     @Override
     public Iterator<E> getIterator(String password)
             throws UnauthorizedException, EmptyFieldException {
 
-        if(password.isBlank())
+        if (password.isBlank())
             throw new EmptyFieldException();
         this.authentication(password);
         List<E> sortedFeed = new ArrayList<>(feed);
@@ -300,19 +311,20 @@ public class Board1<E extends Data>
 
     /**
      * Iteratore che genera tutti i dati condivisi con uno specifico amico
+     *
      * @param friend nome dell'amico
-     * @throws EmptyFieldException se il campo friend è vuoto
      * @return (iterator) ritorna un iteratore immutabile (senza la remove) per generare i posts
+     * @throws EmptyFieldException se il campo friend è vuoto
      */
     @Override
     public Iterator<E> getFriendIterator(String friend)
             throws EmptyFieldException {
 
-        if(friend.isBlank())
+        if (friend.isBlank())
             throw new EmptyFieldException();
         List<E> filteredFeed = new ArrayList<>();
-        for(E post : this.feed)
-            if(this.categories.get(post.getCategory()).contains(friend))
+        for (E post : this.feed)
+            if (this.categories.get(post.getCategory()).contains(friend))
                 filteredFeed.add(post);
         return Collections.unmodifiableList(filteredFeed).iterator();
     }

@@ -18,7 +18,7 @@ public class Main {
         System.out.println("#== PR2-Java ==#");
 
         System.out.println("\nTest prima implementazione di Board...");
-        Board1<Data> board1 = new Board1<>(username,password);
+        Board1<Data> board1 = new Board1<>(username, password);
         try {
             doTest(board1);
         } catch (TestFailException e) {
@@ -27,7 +27,7 @@ public class Main {
         }
 
         System.out.println("\nTest seconda implementazione di Board...");
-        Board2<Data> board2 = new Board2<>(username,password);
+        Board2<Data> board2 = new Board2<>(username, password);
         try {
             doTest(board2);
         } catch (TestFailException e) {
@@ -56,8 +56,8 @@ public class Main {
         }
 
         // createCategory->Unauthorized
-        try{
-            board.createCategory("Videogames",wrongPassword);
+        try {
+            board.createCategory("Videogames", wrongPassword);
             System.out.println("\t\t+ Unauthorized: ❌");
         } catch (EmptyFieldException | DuplicateItemException e) {
             System.out.println("\t\t+ Unauthorized: ❌");
@@ -66,8 +66,8 @@ public class Main {
         }
 
         // createCategory->EmptyField
-        try{
-            board.createCategory("",password);
+        try {
+            board.createCategory("", password);
             System.out.println("\t\t+ EmptyField: ❌");
         } catch (UnauthorizedException | DuplicateItemException e) {
             System.out.println("\t\t+ EmptyField: ❌");
@@ -76,8 +76,8 @@ public class Main {
         }
 
         // createCategory->DuplicateItem
-        try{
-            board.createCategory("Funny",password);
+        try {
+            board.createCategory("Funny", password);
             System.out.println("\t\t+ DuplicateItem: ❌");
         } catch (EmptyFieldException | UnauthorizedException e) {
             System.out.println("\t\t+ DuplicateItem: ❌");
@@ -95,7 +95,7 @@ public class Main {
 
         // removeCategory->Unauthorized
         try {
-            board.removeCategory("Quotes",wrongPassword);
+            board.removeCategory("Quotes", wrongPassword);
             System.out.println("\t\t+ Unauthorized: ❌");
         } catch (EmptyFieldException | ItemNotFoundException e) {
             System.out.println("\t\t+ Unauthorized: ❌");
@@ -105,7 +105,7 @@ public class Main {
 
         // removeCategory->EmptyField
         try {
-            board.removeCategory("",password);
+            board.removeCategory("", password);
             System.out.println("\t\t+ EmptyField: ❌");
         } catch (UnauthorizedException | ItemNotFoundException e) {
             System.out.println("\t\t+ EmptyField: ❌");
@@ -114,8 +114,8 @@ public class Main {
         }
 
         // removeCategory->ItemNotFoundException
-        try{
-            board.removeCategory("Flowers",password);
+        try {
+            board.removeCategory("Flowers", password);
             System.out.println("\t\t+ ItemNotFound: ❌");
         } catch (EmptyFieldException | UnauthorizedException e) {
             System.out.println("\t\t+ ItemNotFound: ❌");
@@ -127,22 +127,22 @@ public class Main {
         System.out.println("\n+ Friends:");
 
         // addFriend
-        try{
-            board.addFriend("Funny",password,"Sofia");
-            board.addFriend("Funny",password,"Riccardo");
-            board.addFriend("Funny",password,"Danila");
-            board.addFriend("Funny",password,"Alessandro");
-            board.addFriend("Pets",password,"Danila");
-            board.addFriend("Technology",password,"Alessandro");
-            board.addFriend("Technology",password,"Riccardo");
+        try {
+            board.addFriend("Funny", password, "Sofia");
+            board.addFriend("Funny", password, "Riccardo");
+            board.addFriend("Funny", password, "Danila");
+            board.addFriend("Funny", password, "Alessandro");
+            board.addFriend("Pets", password, "Danila");
+            board.addFriend("Technology", password, "Alessandro");
+            board.addFriend("Technology", password, "Riccardo");
             System.out.println("\t+ addFriend: ✅");
         } catch (EmptyFieldException | UnauthorizedException | ItemNotFoundException e) {
             System.out.println("\t+ addFriend: ❌");
         }
 
         // addFriend->Unauthorized
-        try{
-            board.addFriend("Quotes",wrongPassword,"Erika");
+        try {
+            board.addFriend("Quotes", wrongPassword, "Erika");
             System.out.println("\t\t+ Unauthorized: ❌");
         } catch (EmptyFieldException | ItemNotFoundException e) {
             System.out.println("\t\t+ Unauthorized: ❌");
@@ -151,8 +151,8 @@ public class Main {
         }
 
         // addFriend->EmptyField
-        try{
-            board.addFriend("",password,"");
+        try {
+            board.addFriend("", password, "");
             System.out.println("\t\t+ EmptyField: ❌");
         } catch (UnauthorizedException | ItemNotFoundException e) {
             System.out.println("\t\t+ EmptyField: ❌");
@@ -161,8 +161,8 @@ public class Main {
         }
 
         // addFriend->ItemNotFoundException
-        try{
-            board.addFriend("Flowers",password,"Leonardo");
+        try {
+            board.addFriend("Flowers", password, "Leonardo");
             System.out.println("\t\t+ ItemNotFound: ❌");
         } catch (EmptyFieldException | UnauthorizedException e) {
             System.out.println("\t\t+ ItemNotFound: ❌");
@@ -171,18 +171,18 @@ public class Main {
         }
 
         // removeFriend
-        try{
-            board.removeFriend("Funny",password,"Riccardo");
-            board.removeFriend("Pets",password,"Danila");
-            board.removeFriend("Technology",password,"Alessandro");
+        try {
+            board.removeFriend("Funny", password, "Riccardo");
+            board.removeFriend("Pets", password, "Danila");
+            board.removeFriend("Technology", password, "Alessandro");
             System.out.println("\t+ removeFriend: ✅");
         } catch (EmptyFieldException | UnauthorizedException | ItemNotFoundException e) {
             System.out.println("\t+ removeFriend: ❌");
         }
 
         // removeFriend->Unauthorized
-        try{
-            board.removeFriend("Funny",wrongPassword,"Sofia");
+        try {
+            board.removeFriend("Funny", wrongPassword, "Sofia");
             System.out.println("\t\t+ Unauthorized: ❌");
         } catch (EmptyFieldException | ItemNotFoundException e) {
             System.out.println("\t\t+ Unauthorized: ❌");
@@ -191,8 +191,8 @@ public class Main {
         }
 
         // removeFriend->EmptyField
-        try{
-            board.removeFriend("",password,"");
+        try {
+            board.removeFriend("", password, "");
             System.out.println("\t\t+ EmptyField: ❌");
         } catch (UnauthorizedException | ItemNotFoundException e) {
             System.out.println("\t\t+ EmptyField: ❌");
@@ -201,8 +201,8 @@ public class Main {
         }
 
         // removeFriend->ItemNotFoundException
-        try{
-            board.removeFriend("Flowers",password,"Leonardo");
+        try {
+            board.removeFriend("Flowers", password, "Leonardo");
             System.out.println("\t\t+ ItemNotFound: ❌");
         } catch (EmptyFieldException | UnauthorizedException e) {
             System.out.println("\t\t+ ItemNotFound: ❌");
@@ -233,17 +233,17 @@ public class Main {
         }
 
         // put
-        try{
-            for(Data post : posts)
-                board.put(password,post,post.getCategory());
+        try {
+            for (Data post : posts)
+                board.put(password, post, post.getCategory());
             System.out.println("\t+ put: ✅");
         } catch (EmptyFieldException | ItemNotFoundException | UnauthorizedException e) {
             System.out.println("\t+ put: ❌");
         }
 
         // put->Unauthorized
-        try{
-            board.put(wrongPassword,posts[4],posts[4].getCategory());
+        try {
+            board.put(wrongPassword, posts[4], posts[4].getCategory());
             System.out.println("\t\t+ Unauthorized: ❌");
         } catch (EmptyFieldException | ItemNotFoundException e) {
             System.out.println("\t\t+ Unauthorized: ❌");
@@ -252,8 +252,8 @@ public class Main {
         }
 
         // put->EmptyField
-        try{
-            board.put(password,posts[5],"");
+        try {
+            board.put(password, posts[5], "");
             System.out.println("\t\t+ EmptyField: ❌");
         } catch (UnauthorizedException | ItemNotFoundException e) {
             System.out.println("\t\t+ EmptyField: ❌");
@@ -262,8 +262,8 @@ public class Main {
         }
 
         // put->ItemNotFound
-        try{
-            board.put(password,posts[6],"Stuffs");
+        try {
+            board.put(password, posts[6], "Stuffs");
             System.out.println("\t\t+ ItemNotFound: ❌");
         } catch (EmptyFieldException | UnauthorizedException e) {
             System.out.println("\t\t+ ItemNotFound: ❌");
@@ -272,17 +272,17 @@ public class Main {
         }
 
         // remove
-        try{
-            board.remove(password,posts[8]);
-            board.remove(password,posts[9]);
+        try {
+            board.remove(password, posts[8]);
+            board.remove(password, posts[9]);
             System.out.println("\t+ remove: ✅");
         } catch (EmptyFieldException | ItemNotFoundException | UnauthorizedException e) {
             System.out.println("\t+ remove: ❌");
         }
 
         // remove->Unauthorized
-        try{
-            board.remove(wrongPassword,posts[2]);
+        try {
+            board.remove(wrongPassword, posts[2]);
             System.out.println("\t\t+ Unauthorized: ❌");
         } catch (EmptyFieldException | ItemNotFoundException e) {
             System.out.println("\t\t+ Unauthorized: ❌");
@@ -291,8 +291,8 @@ public class Main {
         }
 
         // remove->EmptyField
-        try{
-            board.remove("",posts[3]);
+        try {
+            board.remove("", posts[3]);
             System.out.println("\t\t+ EmptyField: ❌");
         } catch (UnauthorizedException | ItemNotFoundException e) {
             System.out.println("\t\t+ EmptyField: ❌");
@@ -301,8 +301,8 @@ public class Main {
         }
 
         // remove->ItemNotFound
-        try{
-            board.remove(password,posts[9]);
+        try {
+            board.remove(password, posts[9]);
             System.out.println("\t\t+ ItemNotFound: ❌");
         } catch (EmptyFieldException | UnauthorizedException e) {
             System.out.println("\t\t+ ItemNotFound: ❌");
@@ -311,18 +311,18 @@ public class Main {
         }
 
         // get
-        try{
-            board.get(password,posts[0]);
-            board.get(password,posts[1]);
-            board.get(password,posts[2]);
+        try {
+            board.get(password, posts[0]);
+            board.get(password, posts[1]);
+            board.get(password, posts[2]);
             System.out.println("\t+ get: ✅");
         } catch (EmptyFieldException | ItemNotFoundException | UnauthorizedException e) {
             System.out.println("\t+ get: ❌");
         }
 
         // get->Unauthorized
-        try{
-            board.get(wrongPassword,posts[4]);
+        try {
+            board.get(wrongPassword, posts[4]);
             System.out.println("\t\t+ Unauthorized: ❌");
         } catch (EmptyFieldException | ItemNotFoundException e) {
             System.out.println("\t\t+ Unauthorized: ❌");
@@ -331,8 +331,8 @@ public class Main {
         }
 
         // get->EmptyField
-        try{
-            board.get("",posts[5]);
+        try {
+            board.get("", posts[5]);
             System.out.println("\t\t+ EmptyField: ❌");
         } catch (UnauthorizedException | ItemNotFoundException e) {
             System.out.println("\t\t+ EmptyField: ❌");
@@ -341,8 +341,8 @@ public class Main {
         }
 
         // get->ItemNotFound
-        try{
-            board.get(password,posts[9]);
+        try {
+            board.get(password, posts[9]);
             System.out.println("\t\t+ ItemNotFound: ❌");
         } catch (EmptyFieldException | UnauthorizedException e) {
             System.out.println("\t\t+ ItemNotFound: ❌");
@@ -359,13 +359,13 @@ public class Main {
             board.insertLike("Riccardo", posts[6]);
             board.insertLike("Riccardo", posts[6]);
             System.out.println("\t+ insertLike: ✅");
-        }catch (EmptyFieldException | ItemNotFoundException | NotAllowedException e) {
+        } catch (EmptyFieldException | ItemNotFoundException | NotAllowedException e) {
             System.out.println("\t+ insertLike: ❌");
         }
 
         // insertLike->EmptyField
-        try{
-            board.insertLike("",posts[3]);
+        try {
+            board.insertLike("", posts[3]);
             System.out.println("\t\t+ EmptyField: ❌");
         } catch (ItemNotFoundException | NotAllowedException e) {
             System.out.println("\t\t+ EmptyField: ❌");
@@ -374,8 +374,8 @@ public class Main {
         }
 
         // insertLike->ItemNotFound
-        try{
-            board.insertLike("Martina",posts[9]);
+        try {
+            board.insertLike("Martina", posts[9]);
             System.out.println("\t\t+ ItemNotFound: ❌");
         } catch (EmptyFieldException | NotAllowedException e) {
             System.out.println("\t\t+ ItemNotFound: ❌");
@@ -384,8 +384,8 @@ public class Main {
         }
 
         // insertLike->NotAllowed
-        try{
-            board.insertLike("Sofia",posts[2]);
+        try {
+            board.insertLike("Sofia", posts[2]);
             System.out.println("\t\t+ NotAllowed: ❌");
         } catch (EmptyFieldException | ItemNotFoundException e) {
             System.out.println("\t\t+ NotAllowed: ❌");
@@ -394,17 +394,17 @@ public class Main {
         }
 
         // getDataCategory
-        try{
-            List<Data> postTechnology = board.getDataCategory(password,"Technology");
-            if(postTechnology.size() != 2) throw new TestFailException();
+        try {
+            List<Data> postTechnology = board.getDataCategory(password, "Technology");
+            if (postTechnology.size() != 2) throw new TestFailException();
             System.out.println("\t+ getDataCategory: ✅");
         } catch (EmptyFieldException | ItemNotFoundException | UnauthorizedException | TestFailException e) {
             System.out.println("\t+ getDataCategory: ❌");
         }
 
         // getDataCategory->Unauthorized
-        try{
-            board.getDataCategory(wrongPassword,"Pets");
+        try {
+            board.getDataCategory(wrongPassword, "Pets");
             System.out.println("\t\t+ Unauthorized: ❌");
         } catch (EmptyFieldException | ItemNotFoundException e) {
             System.out.println("\t\t+ Unauthorized: ❌");
@@ -413,8 +413,8 @@ public class Main {
         }
 
         // getDataCategory->EmptyField
-        try{
-            board.getDataCategory("","");
+        try {
+            board.getDataCategory("", "");
             System.out.println("\t\t+ EmptyField: ❌");
         } catch (UnauthorizedException | ItemNotFoundException e) {
             System.out.println("\t\t+ EmptyField: ❌");
@@ -423,8 +423,8 @@ public class Main {
         }
 
         // getDataCategory->ItemNotFound
-        try{
-            board.getDataCategory(password,"Stuffs");
+        try {
+            board.getDataCategory(password, "Stuffs");
             System.out.println("\t\t+ ItemNotFound: ❌");
         } catch (EmptyFieldException | UnauthorizedException e) {
             System.out.println("\t\t+ ItemNotFound: ❌");
@@ -433,31 +433,31 @@ public class Main {
         }
 
         // getIterator
-        try{
+        try {
             Iterator<Data> postsIterator = board.getIterator(password);
-            if(postsIterator.next().getLikesCounter() != 2) throw new TestFailException();
-            if(postsIterator.next().getLikesCounter() != 1) throw new TestFailException();
-            if(postsIterator.next().getLikesCounter() != 1) throw new TestFailException();
-            if(postsIterator.next().getLikesCounter() != 0) throw new TestFailException();
+            if (postsIterator.next().getLikesCounter() != 2) throw new TestFailException();
+            if (postsIterator.next().getLikesCounter() != 1) throw new TestFailException();
+            if (postsIterator.next().getLikesCounter() != 1) throw new TestFailException();
+            if (postsIterator.next().getLikesCounter() != 0) throw new TestFailException();
             System.out.println("\t+ getIterator: ✅");
         } catch (EmptyFieldException | UnauthorizedException | TestFailException e) {
             System.out.println("\t+ getIterator: ❌");
         }
 
         // getIterator->remove
-        try{
+        try {
             Iterator<Data> postsIterator = board.getIterator(password);
             postsIterator.next();
             postsIterator.remove();
             System.out.println("\t\t+ Remove: ❌");
         } catch (EmptyFieldException | UnauthorizedException e) {
             System.out.println("\t\t+ Remove: ❌");
-        } catch (UnsupportedOperationException e){
+        } catch (UnsupportedOperationException e) {
             System.out.println("\t\t+ Remove: ✅");
         }
 
         // getIterator->Unauthorized
-        try{
+        try {
             board.getIterator(wrongPassword);
             System.out.println("\t\t+ Unauthorized: ❌");
         } catch (EmptyFieldException e) {
@@ -467,7 +467,7 @@ public class Main {
         }
 
         // getIterator->EmptyField
-        try{
+        try {
             board.getIterator("");
             System.out.println("\t\t+ EmptyField: ❌");
         } catch (UnauthorizedException e) {
@@ -477,17 +477,17 @@ public class Main {
         }
 
         // getFriendIterator
-        try{
+        try {
             Iterator<Data> friendIterator = board.getFriendIterator("Danila");
-            if(!(friendIterator.next().getContent().equals("<A>"))) throw new TestFailException();
-            if(!(friendIterator.next().getContent().equals("<B>"))) throw new TestFailException();
+            if (!(friendIterator.next().getContent().equals("<A>"))) throw new TestFailException();
+            if (!(friendIterator.next().getContent().equals("<B>"))) throw new TestFailException();
             System.out.println("\t+ getFriendIterator: ✅");
         } catch (EmptyFieldException | TestFailException e) {
             System.out.println("\t+ getFriendIterator: ❌");
         }
 
         // getFriendIterator->EmptyField
-        try{
+        try {
             board.getFriendIterator("");
             System.out.println("\t\t+ EmptyField: ❌");
         } catch (EmptyFieldException e) {
@@ -498,7 +498,7 @@ public class Main {
         System.out.println("\n+ Misc:");
 
         // display
-        try{
+        try {
             Iterator<Data> iterator = board.getIterator(password);
             System.out.print("\t+ display: ");
             iterator.next().display();
@@ -507,8 +507,8 @@ public class Main {
         }
 
         // resetPassword
-        try{
-            board.resetPassword(password,newPassword);
+        try {
+            board.resetPassword(password, newPassword);
             board.authentication(newPassword);
             System.out.println("\t+ resetPassword: ✅");
         } catch (SamePasswordException | EmptyFieldException | UnauthorizedException e) {
@@ -516,7 +516,7 @@ public class Main {
         }
 
         // resetPassword->Unauthorized
-        try{
+        try {
             board.authentication(password); // Old password
             System.out.println("\t\t+ Unauthorized: ❌");
         } catch (EmptyFieldException e) {

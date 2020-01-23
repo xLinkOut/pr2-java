@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Data implements Comparable<Data> {
 
-    /**
+    /*
      *   Overview:
      *      Rappresentazione di un generico post che può essere creato e condiviso
      *      dal proprietario di una board. La classe mette a disposizione dell'utente
@@ -39,15 +39,16 @@ public class Data implements Comparable<Data> {
 
     /**
      * Costruttore della classe Data
-     * @param author è il nome del proprietario della board, che pubblica il post
-     * @param content è il contenuto del post
+     *
+     * @param author   è il nome del proprietario della board, che pubblica il post
+     * @param content  è il contenuto del post
      * @param category è il nome della categoria che si vuole associare al post
      * @throws EmptyFieldException se almeno uno dei tre parametri è una stringa vuota
      */
     public Data(String author, String content, String category)
             throws EmptyFieldException {
 
-        if(author.isBlank() || content.isBlank() || category.isBlank())
+        if (author.isBlank() || content.isBlank() || category.isBlank())
             throw new EmptyFieldException();
 
         this.author = author;
@@ -59,6 +60,7 @@ public class Data implements Comparable<Data> {
 
     /**
      * Costruttore di copia per il tipo di dato Data
+     *
      * @param data è il dato che si vuole copiare
      */
     public Data(Data data) {
@@ -73,62 +75,81 @@ public class Data implements Comparable<Data> {
 
     /**
      * Getter per il campo author del post
+     *
      * @return (author) il nome del proprietario del post
      */
-    public String getAuthor(){ return author; }
+    public String getAuthor() {
+        return author;
+    }
 
     /**
      * Getter per il campo content del post
+     *
      * @return (content) il contenuto del post
      */
-    public String getContent(){ return content; }
+    public String getContent() {
+        return content;
+    }
 
     /**
      * Getter per il campo category del post
+     *
      * @return (category) la categoria a cui il post è associato
      */
-    public String getCategory(){ return category; }
+    public String getCategory() {
+        return category;
+    }
 
     /**
      * Getter per il tempo di creazione del post in formato UNIX
+     *
      * @return (timestamp)
      */
-    public long getTimestamp(){ return timestamp; }
+    public long getTimestamp() {
+        return timestamp;
+    }
 
     /**
      * Getter per il numero di like del post
+     *
      * @return (likesCounter) usa la funzione .size() della lista di likes
      */
-    public int getLikesCounter(){ return likes.size(); }
+    public int getLikesCounter() {
+        return likes.size();
+    }
 
     /**
      * Getter per la lista dei like del post
+     *
      * @return (likes) ritorna una copia della lista di likes
      */
-    public List<String> getLikes(){ return new ArrayList<>(likes); }
+    public List<String> getLikes() {
+        return new ArrayList<>(likes);
+    }
 
     /**
      * Visualizza il post
+     *
      * @effects stampa a video il post usando il metodo toString
      */
-    public void display(){
+    public void display() {
         System.out.println(toString());
     }
 
     /**
      * Aggiunge un like al post da parte dell'amico indicato, se non è già presente
+     *
      * @param friend nome dell'amico che vuole mettere like
      * @throws EmptyFieldException se friend è una stringa vuota
      * @modifies this.likes
-     * @effects post(this.likes) = pre(this.likes) U {friend}
-     *          || removeLike(friend)
+     * @effects (post(this.likes) = pre(this.likes) U {friend}) || removeLike(friend)
      */
     public void addLike(String friend)
             throws EmptyFieldException {
 
-        if(friend.isBlank())
+        if (friend.isBlank())
             throw new EmptyFieldException();
-        if(this.likes.contains(friend))
+        if (this.likes.contains(friend))
             this.removeLike(friend);
         else
             this.likes.add(friend);
@@ -137,24 +158,26 @@ public class Data implements Comparable<Data> {
     /**
      * Rimuove il like di friend se questo è presente
      * E' un metodo privato chiamato da addLike
+     *
      * @param friend il nome dell'amico
      * @modifies this.likes
      * @effects post(this.likes) = pre(this.likes) \ {friend}
      */
-    private void removeLike(String friend){
+    private void removeLike(String friend) {
         this.likes.remove(friend);
     }
 
     /**
      * Ritorna una stringa per visualizzare il post in formato JSON-like
+     *
      * @return (post)
      */
-    public String toString(){
-        return "{'author': "       + getAuthor() +
-                ",'content:' "   + getContent() +
+    public String toString() {
+        return "{'author': " + getAuthor() +
+                ",'content:' " + getContent() +
                 ",'timestamp': " + getTimestamp() +
-                ",'category': "  + getCategory() +
-                ",'likes': "     + getLikesCounter() +
+                ",'category': " + getCategory() +
+                ",'likes': " + getLikesCounter() +
                 ",'likesList: [" + String.join(", ", getLikes()) + "]" +
                 "}";
     }
@@ -162,22 +185,24 @@ public class Data implements Comparable<Data> {
     /**
      * Confronta il numero di like tra due post per effettuare un ordinamento.
      * A parità di like, si usa l'ordine lessicografico del campo content
+     *
      * @param post il post con cui confrontare
      * @return (result) un intero che determina l'ordinamento (discendente, in questo caso)
      */
     @Override
     public int compareTo(Data post) {
         int result = post.getLikesCounter() - this.getLikesCounter();
-        if(result == 0)
+        if (result == 0)
             return (post.getContent().compareTo(this.getContent()) < 0) ? 1 : -1;
         return result;
     }
 
     /**
      * Permette di restituire una copia del dato quando richiesto
+     *
      * @return (data) copia del post richiesto
      */
-    public Data clone(){
+    public Data clone() {
         return new Data(this);
     }
 }
