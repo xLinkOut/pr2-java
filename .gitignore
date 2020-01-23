@@ -1,0 +1,9 @@
+# Files
+*.iml
+*.class
+.DS_Store
+
+# Directories
+out/
+.idea/
+relazione/
