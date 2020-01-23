@@ -2,8 +2,8 @@
 *.iml
 *.class
 .DS_Store
+relazione/relazione.pdf
 
 # Directories
 out/
 .idea/
-relazione/
