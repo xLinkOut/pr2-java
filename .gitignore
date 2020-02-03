@@ -3,7 +3,6 @@
 *.class
 .DS_Store
 relazione/Relazione.pdf
-relazione/Specifica.pdf
 
 # Directories
 out/
