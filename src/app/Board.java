@@ -97,9 +97,7 @@ public abstract class Board<E extends Data>
             throw new SamePasswordException();
 
         this.authentication(currentPassword);
-        // La password corrente è giusta
         this.password = newPassword;
-        // La password corrente è sbagliata
 
     }
 }
